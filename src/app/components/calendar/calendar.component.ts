@@ -1,31 +1,31 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Reminder } from 'src/app/interfaces/reminder';
-import { CalendarService } from 'src/app/services/calendar.service';
-import { WeatherService } from 'src/app/services/weather.service';
+import { Reminder, Week } from 'src/app/interfaces';
+import { CalendarService, WeatherService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
-
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-
-  onDestroy$ = new Subject<boolean>();
+  public currentWeeks: Week[] = [];
+  private _onDestroy$ = new Subject<boolean>();
 
   constructor(
-    private calendarService: CalendarService,
-    private weatherService: WeatherService,
-    private matDialog: MatDialog,
-  ) { }
+    private _calendarService: CalendarService,
+    private _weatherService: WeatherService,
+    private _matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.calendarService.list(new Date())
-      .pipe(takeUntil(this.onDestroy$))
+    this._calendarService.getCurrentMont('September');
+    this._calendarService
+      .list(new Date())
+      .pipe(takeUntil(this._onDestroy$))
       .subscribe((reminders: Reminder[]) => {
         reminders.map((reminder: Reminder) => {
           return {
@@ -38,22 +38,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   getWeather(city: string) {
-    const x = this.weatherService.getWeatherInformation(city);
+    const x = this._weatherService.getWeatherInformation(city);
     console.log(x);
     return x;
   }
 
   ngOnDestroy() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.complete();
+    this._onDestroy$.next(true);
+    this._onDestroy$.complete();
   }
 
   openReminderForm(reminder?: Reminder) {
-    this.matDialog.open(ReminderFormComponent, {
+    this._matDialog.open(ReminderFormComponent, {
       data: {
         reminder,
       },
     });
   }
-
 }
