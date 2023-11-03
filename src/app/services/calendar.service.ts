@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Reminder } from '../interfaces/reminder';
-import { Month } from '../interfaces';
+import { Reminder, Month } from '../interfaces';
+import { Months, mockupData } from '../constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
-  reminders: Reminder[] = [];
+  public reminders: Reminder[] = [];
 
-  constructor() {}
+  private readonly _mockupDataURL = mockupData;
 
-  public getCurrentMont(month: string): any {
+  constructor(private _http: HttpClient) {}
+
+  public getCurrentMont(month: string): Observable<Month> {
     // API call...
     // Backend returns the desired Month
     // we fake all that with the method below
-    this._generateMonth(2023, month, 3);
+    //this._generateMonth(2023, month, 3);
+    return this._getFakeMonth();
   }
 
   public create(data: Reminder): Reminder {
@@ -41,20 +45,7 @@ export class CalendarService {
     month: string,
     numberOfDaysBefore: number
   ): any {
-    const monthsInYear = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
+    const monthsInYear = Months;
 
     const monthIndex = monthsInYear.findIndex(
       (m) => m.toLowerCase() === month.toLowerCase()
@@ -81,5 +72,10 @@ export class CalendarService {
 
     //return days;
     console.log(days);
+  }
+
+  private _getFakeMonth(): Observable<Month> {
+    // fake response to simulate a real response from a backend service
+    return of(JSON.parse(this._mockupDataURL));
   }
 }

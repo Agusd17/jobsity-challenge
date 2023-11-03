@@ -6,7 +6,7 @@ import { CalendarComponent } from './calendar.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 import { ReminderFormModule } from '../reminder-form/reminder-form.module';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [CalendarComponent],
@@ -19,4 +19,4 @@ import { ReminderFormModule } from '../reminder-form/reminder-form.module';
   ],
   entryComponents: [ReminderFormComponent],
 })
-export class CalendarModule { }
+export class CalendarModule {}

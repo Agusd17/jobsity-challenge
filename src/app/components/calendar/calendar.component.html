@@ -15,7 +15,23 @@
     <div class="calendar-year"></div>
     <div class="calendar-month"></div>
     <div class="calendar-weeks">
-      <div class="week" *ngFor="let week of currentWeeks"></div>
+      <table class="calendar-table">
+        <tr class="calendar-header-row">
+          <th class="calendar-header-cell" *ngFor="let day of days">
+            {{ day }}
+          </th>
+        </tr>
+        <tr class="calendar-week-row" *ngFor="let week of selectedMonth?.weeks">
+          <td
+            class="calendar-week-cell"
+            *ngFor="let day of week.days; let i = index"
+            [class]="i === 0 || i === 6 ? 'weekend-day' : ''"
+          >
+            {{ day.date }}
+          </td>
+        </tr>
+      </table>
+      <div class="week" *ngFor="let week of selectedMonth?.weeks"></div>
     </div>
   </div>
 </div>

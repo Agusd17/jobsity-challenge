@@ -59,3 +59,17 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+-----------------------------------------------------------------------------------
+
+### Challenge done by Agustin D'llano
+# Documentation
+
+## Some considerations
+
+- The default 'ng serve' command was modified to include the optional '-o' and '-port' flags, for convenience (even when declaring port 4200 is redundant)
+- Private properties were renamed to include '_' as a prefix, to better identify them in the code
+- Public properties had the 'public' declaration attached to them, to improve code readability
+- Both variable and method declarations are now ordered, having public declarations first and private ones after
+- resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
