@@ -73,3 +73,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Public properties had the 'public' declaration attached to them, to improve code readability
 - Both variable and method declarations are now ordered, having public declarations first and private ones after
 - resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
+- existing unit tests were fixed to work again. No aditional testing was added to existing unit tests that aren't part of my code, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
+
+## Month generation
+
+In reality, the Frontend shouldn't be generating anything, this month would be requested to the backend via an API call, which would retrieve it from the database
+(the only valid source of truth).
+For the purposes of demonstrating how the app works, I've created a helper function that generates a calendar month, based on two arguments: the desired Month, and the desired Year.
+
+I like to explain how structures work directly in the code when absolutely necessary, it's faster for other developers to understand what does what (I try to make my code as self explanatory as possible, but still, comments were added in this case, just to clarify some things for the challenge)
+
+## Data saving
+
+Again, in reality, we would be uploading the data changes (creation, deletion, updates) through a service, to a real API. For the purposes of demonstrating the functionality of the app, we are using LocalStorage as a "fake" database.

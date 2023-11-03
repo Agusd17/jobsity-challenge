@@ -17,17 +17,28 @@
     <div class="calendar-weeks">
       <table class="calendar-table">
         <tr class="calendar-header-row">
-          <th class="calendar-header-cell" *ngFor="let day of days">
+          <th
+            class="calendar-cell calendar-header-cell"
+            *ngFor="let day of days"
+          >
             {{ day }}
           </th>
         </tr>
         <tr class="calendar-week-row" *ngFor="let week of selectedMonth?.weeks">
           <td
-            class="calendar-week-cell"
+            (click)="openModal(day)"
+            class="calendar-cell calendar-week-cell"
             *ngFor="let day of week.days; let i = index"
             [class]="i === 0 || i === 6 ? 'weekend-day' : ''"
           >
             {{ day.date }}
+            <div *ngFor="let reminder of day.reminders">
+              <p>
+                {{ reminder.dateTime | date : "shortTime" }}:
+                {{ reminder.text }}
+              </p>
+              <p>{{ reminder.city }} | {{ reminder.weather }}</p>
+            </div>
           </td>
         </tr>
       </table>
@@ -35,4 +46,5 @@
     </div>
   </div>
 </div>
+<app-day-modal *ngIf="modalVisible" (closeModal)="closeModal()"></app-day-modal>
 <!-- ======================== -->

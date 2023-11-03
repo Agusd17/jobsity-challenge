@@ -1,6 +1,7 @@
 export interface Reminder {
-  text: string;
   dateTime: Date;
+  text: string;
   color: string;
-  city?: string;
+  city: string;
+  weather: string;
 }

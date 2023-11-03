@@ -12,6 +12,7 @@
 .calendar-table {
   border: 1px solid lightgrey;
   border-collapse: collapse;
+  font-size: 12px;
 }
 
 .calendar-header-row {
@@ -19,12 +20,20 @@
   color: white;
 }
 
+.calendar-cell {
+  width: 80px;
+}
+
 .calendar-week-cell {
-  padding: 15px;
+  padding: 2px 7px 7px;
+  height: 60px;
   color: #0a0a0a;
   font-weight: 700;
+  border: 1px solid #898989;
+  vertical-align: baseline;
 
   &.weekend-day {
     color: #3f7bb7;
+    background: rgb(216, 216, 216);
   }
 }

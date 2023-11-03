@@ -6,11 +6,11 @@ import { CalendarComponent } from './calendar.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 import { ReminderFormModule } from '../reminder-form/reminder-form.module';
-import { HttpClientModule } from '@angular/common/http';
+import { DayModalComponent } from '../day-modal/day-modal.component';
 
 @NgModule({
-  declarations: [CalendarComponent],
-  exports: [CalendarComponent],
+  declarations: [CalendarComponent, DayModalComponent],
+  exports: [CalendarComponent, DayModalComponent],
   imports: [
     CommonModule,
     CalendarRoutingModule,

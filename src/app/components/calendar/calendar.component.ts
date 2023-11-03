@@ -6,6 +6,7 @@ import { CalendarService, WeatherService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 import { Days } from 'src/app/constants';
+import { Day } from 'src/app/interfaces/day';
 
 @Component({
   selector: 'app-calendar',
@@ -14,6 +15,7 @@ import { Days } from 'src/app/constants';
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   public days = Days;
+  public modalVisible = false;
   public currentWeeks: Week[] = [];
   public selectedMonth: Month | null = null;
 
@@ -52,7 +54,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this._calendarService
       .list(new Date())
       .pipe(takeUntil(this._onDestroy$))
@@ -67,22 +69,30 @@ export class CalendarComponent implements OnInit, OnDestroy {
       });
   }
 
-  getWeather(city: string) {
+  public ngOnDestroy() {
+    this._onDestroy$.next(true);
+    this._onDestroy$.complete();
+  }
+
+  public getWeather(city: string) {
     const x = this._weatherService.getWeatherInformation(city);
     console.log(x);
     return x;
   }
 
-  ngOnDestroy() {
-    this._onDestroy$.next(true);
-    this._onDestroy$.complete();
-  }
-
-  openReminderForm(reminder?: Reminder) {
+  public openReminderForm(reminder?: Reminder) {
     this._matDialog.open(ReminderFormComponent, {
       data: {
         reminder,
       },
     });
+  }
+
+  public openModal(day: Day): void {
+    this.modalVisible = true;
+  }
+
+  public closeModal(): void {
+    this.modalVisible = false;
   }
 }
