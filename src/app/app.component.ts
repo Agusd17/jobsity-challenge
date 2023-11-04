@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { generateMonth } from './helpers';
-import { MonthsToNumber } from './constants/enums';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +7,4 @@ import { MonthsToNumber } from './constants/enums';
 })
 export class AppComponent {
   title = 'AngularChallenge';
-  private _months = MonthsToNumber;
-
-  constructor() {
-    const generatedMonth = generateMonth(2024, this._months.September);
-    console.log(generatedMonth);
-  }
 }

@@ -1,15 +1,42 @@
-<div>
-  <h2>Add a new reminder</h2>
-</div>
-<div class="reminder-cont">
-  <p *ngIf="!selectedDate">Please, select a date:</p>
-  <p *ngIf="!!selectedDate">
-    Selected date: {{ selectedDate | date : "dd/MM/yyyy" }}
-  </p>
-  <mat-card class="custom-calendar-card">
+<div class="reminder-container">
+  <div>
+    <h2>Add a new reminder</h2>
+  </div>
+  <div>
+    <p *ngIf="!selectedDate">Please, select a date:</p>
+    <p *ngIf="!!selectedDate">
+      Selected date: {{ selectedDate | date : "dd/MM/yyyy" }}
+    </p>
     <mat-calendar
       [(selected)]="selectedDate"
       (selectedChange)="onDateChange($event)"
+      [minDate]="minSelectableDate"
+      [maxDate]="maxSelectableDate"
     ></mat-calendar>
-  </mat-card>
+  </div>
+  <div class="reminder-text">
+    <p>Write your reminder (max {{ maxReminderLength }} characters):</p>
+    <input
+      class="reminder-input"
+      maxlength="30"
+      type="text"
+      placeholder="Write something..."
+      [(ngModel)]="reminderText"
+      name="reminderText"
+    />
+    <span
+      >{{ maxReminderLength - reminderText.length }} available characters</span
+    >
+  </div>
+  <div class="reminder-city">
+    <p>Write the associated city name:</p>
+    <input
+      class="reminder-input"
+      type="text"
+      placeholder="Write something..."
+      [(ngModel)]="reminderCity"
+      name="reminderCity"
+    />
+  </div>
+  <button class="update-button" (click)="createReminder()">Apply</button>
 </div>

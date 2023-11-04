@@ -28,7 +28,7 @@
           *ngFor="let day of week.days; let i = index"
           [ngClass]="{
             'weekend-day': i === 0 || i === 6,
-            disabled: day.date.getMonth() !== selectedMonthIndex
+            'disabled-day': day.date.getMonth() !== selectedMonthIndex
           }"
         >
           {{ day.date | date : "dd" }}

@@ -12,9 +12,12 @@ export class WeatherService {
 
   constructor(private _http: HttpClient) {}
 
-  getWeatherInformation(city: string): Observable<IApiWeatherResponse> {
+  getWeatherInformation(
+    city: string,
+    dateString: string
+  ): Observable<IApiWeatherResponse> {
     return this._http.get<IApiWeatherResponse>(
-      `${this._apiWeather.url}${city}?key=${this._apiWeather.apiKey}`
+      `${this._apiWeather.url}${city}/${dateString}?key=${this._apiWeather.apiKey}`
     );
   }
 }

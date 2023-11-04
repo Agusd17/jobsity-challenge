@@ -25,11 +25,13 @@ export class MonthPickerComponent {
         return;
       }
       this.selectedMonth = 0;
+      this.selectedYear += 1;
     } else if (this.selectedMonth + value < 0) {
       if (this.selectedYear === 2000) {
         return;
       }
       this.selectedMonth = 11;
+      this.selectedYear -= 1;
     } else {
       this.selectedMonth += value;
     }

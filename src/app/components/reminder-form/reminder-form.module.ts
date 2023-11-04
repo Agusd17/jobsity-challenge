@@ -4,6 +4,7 @@ import { ReminderFormComponent } from './reminder-form.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ReminderFormComponent],
@@ -13,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
     MatNativeDateModule,
     MatDatepickerModule,
     MatCardModule,
+    FormsModule,
   ],
 })
 export class ReminderFormModule {}

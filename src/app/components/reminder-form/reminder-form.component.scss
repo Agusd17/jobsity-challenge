@@ -1,3 +1,20 @@
+.reminder-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.reminder-input {
+  padding: 6px;
+  border-radius: 4px;
+  width: -webkit-fill-available;
+  border: 1px solid #a3a3a3;
+}
+
 .custom-calendar-card {
   width: 300px;
 }

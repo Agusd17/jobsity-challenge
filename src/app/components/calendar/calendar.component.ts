@@ -29,12 +29,26 @@ export class CalendarComponent implements OnInit, OnDestroy {
   ) {
     this._calendarService
       .getCurrentMont(new Date().getFullYear(), new Date().getMonth())
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        map((response) => {
+          const modifiedResponse = {
+            ...response,
+            weeks: response.weeks.map((week: IWeek) => {
+              return {
+                ...week,
+                days: week.days.map((day: IDay) => {
+                  return { ...day, date: new Date(day.date) };
+                }),
+              };
+            }),
+          };
+          return modifiedResponse;
+        })
+      )
       .subscribe((response) => {
         this.selectedMonth = response;
         this.selectedMonthIndex = new Date().getMonth();
-        console.log('Current month:');
-        console.log(response);
       });
   }
 
@@ -49,7 +63,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
             weather: this.getWeather(reminder.city),
           };
         });
-        console.log(reminders);
       });
   }
 
@@ -59,8 +72,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   public getWeather(city: string) {
-    const x = this._weatherService.getWeatherInformation(city);
-    console.log(x);
+    const x = this._weatherService.getWeatherInformation(city, '2023-11-04');
     return x;
   }
 
@@ -86,7 +98,23 @@ export class CalendarComponent implements OnInit, OnDestroy {
   public updateSelectedMonth(date: Date): void {
     this._calendarService
       .getCurrentMont(date.getFullYear(), date.getMonth())
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        map((response) => {
+          const modifiedResponse = {
+            ...response,
+            weeks: response.weeks.map((week: IWeek) => {
+              return {
+                ...week,
+                days: week.days.map((day: IDay) => {
+                  return { ...day, date: new Date(day.date) };
+                }),
+              };
+            }),
+          };
+          return modifiedResponse;
+        })
+      )
       .subscribe((response) => {
         this.selectedMonth = response;
         this.selectedMonthIndex = date.getMonth();

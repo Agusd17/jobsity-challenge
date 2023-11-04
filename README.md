@@ -75,6 +75,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Interface names include a capital 'I' as a prefix, to better identify them (also applied to existant interfaces)
 - Resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
 - Existing unit tests were fixed to work again. No aditional testing was added to existing unit tests that aren't part of my code, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
+- Some functionality has minor bugs, such as the date picker from Angular Material, not correctly implementing the minimumDate (you are allowed to pick December 31th, 1999, when the minimum year should be 2000). This might be related to timezone conflicts, with the Date javascript class. Maybe using Moment could fix it, but I decided to leave it as it is, otherwise I would have to dedicate some more time debugging and trying different solutions
 
 ## Month generation
 
