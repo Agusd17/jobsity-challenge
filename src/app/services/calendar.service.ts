@@ -39,15 +39,24 @@ export class CalendarService {
 
   public create(data: IReminder): boolean {
     console.log(data);
+    try {
+      let targetMonth: IMonth | null = null;
+      const existingMonth = localStorage.getItem(
+        `month:${data.dateTime.getFullYear()}-${data.dateTime.getMonth()}`
+      );
 
-    const existingMonth = localStorage.getItem(
-      `month:${data.dateTime.getFullYear()}-${data.dateTime.getMonth()}`
-    );
-    if (existingMonth) {
-      let parsedMonth = JSON.parse(existingMonth);
-      parsedMonth = {
-        ...parsedMonth,
-        weeks: parsedMonth.weeks.map((week: IWeek) => {
+      if (existingMonth) {
+        targetMonth = JSON.parse(existingMonth);
+      } else {
+        targetMonth = generateMonth(
+          data.dateTime.getFullYear(),
+          data.dateTime.getMonth()
+        );
+      }
+
+      targetMonth = {
+        ...targetMonth,
+        weeks: targetMonth.weeks.map((week: IWeek) => {
           return {
             ...week,
             days: week.days.map((day: IDay) => {
@@ -64,11 +73,12 @@ export class CalendarService {
       };
       localStorage.setItem(
         `month:${data.dateTime.getFullYear()}-${data.dateTime.getMonth()}`,
-        JSON.stringify(parsedMonth)
+        JSON.stringify(targetMonth)
       );
       return true;
+    } catch (error) {
+      return false;
     }
-    return false;
   }
 
   public edit(data: IReminder): void {}
