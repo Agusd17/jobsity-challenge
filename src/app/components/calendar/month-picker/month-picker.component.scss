@@ -1,0 +1,30 @@
+.calendar-month-picker {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+
+  .month-picker-arrow {
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+  }
+}
+
+.calendar-year,
+.calendar-month {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.calendar-year {
+  width: 80px;
+}
+
+.text {
+  margin: 0 10px;
+  color: #2f74b5;
+  font-weight: 700;
+}

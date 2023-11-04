@@ -1,1 +1,15 @@
-<p>Reminder form will be here :)</p>
+<div>
+  <h2>Add a new reminder</h2>
+</div>
+<div class="reminder-cont">
+  <p *ngIf="!selectedDate">Please, select a date:</p>
+  <p *ngIf="!!selectedDate">
+    Selected date: {{ selectedDate | date : "dd/MM/yyyy" }}
+  </p>
+  <mat-card class="custom-calendar-card">
+    <mat-calendar
+      [(selected)]="selectedDate"
+      (selectedChange)="onDateChange($event)"
+    ></mat-calendar>
+  </mat-card>
+</div>

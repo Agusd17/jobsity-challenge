@@ -6,10 +6,11 @@ import { CalendarComponent } from './calendar.component';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 import { ReminderFormModule } from '../reminder-form/reminder-form.module';
-import { DayModalComponent } from '../day-modal/day-modal.component';
+import { DayModalComponent } from './day-modal/day-modal.component';
+import { MonthPickerComponent } from './month-picker/month-picker.component';
 
 @NgModule({
-  declarations: [CalendarComponent, DayModalComponent],
+  declarations: [CalendarComponent, DayModalComponent, MonthPickerComponent],
   exports: [CalendarComponent, DayModalComponent],
   imports: [
     CommonModule,

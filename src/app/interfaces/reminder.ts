@@ -1,4 +1,4 @@
-export interface Reminder {
+export interface IReminder {
   dateTime: Date;
   text: string;
   color: string;

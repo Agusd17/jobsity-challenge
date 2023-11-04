@@ -1,6 +1,6 @@
-import { Week } from './week';
+import { IWeek } from './week';
 
-export interface Month {
+export interface IMonth {
   monthName: string;
-  weeks: Week[];
+  weeks: IWeek[];
 }

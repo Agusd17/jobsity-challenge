@@ -1,6 +1,6 @@
-import { Reminder } from './reminder';
+import { IReminder } from './reminder';
 
-export interface Day {
-  date: string;
-  reminders?: Reminder[];
+export interface IDay {
+  date: Date;
+  reminders?: IReminder[];
 }

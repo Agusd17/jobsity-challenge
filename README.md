@@ -72,8 +72,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Private properties were renamed to include '_' as a prefix, to better identify them in the code
 - Public properties had the 'public' declaration attached to them, to improve code readability
 - Both variable and method declarations are now ordered, having public declarations first and private ones after
-- resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
-- existing unit tests were fixed to work again. No aditional testing was added to existing unit tests that aren't part of my code, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
+- Interface names include a capital 'I' as a prefix, to better identify them (also applied to existant interfaces)
+- Resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
+- Existing unit tests were fixed to work again. No aditional testing was added to existing unit tests that aren't part of my code, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
 
 ## Month generation
 
@@ -86,3 +87,11 @@ I like to explain how structures work directly in the code when absolutely neces
 ## Data saving
 
 Again, in reality, we would be uploading the data changes (creation, deletion, updates) through a service, to a real API. For the purposes of demonstrating the functionality of the app, we are using LocalStorage as a "fake" database.
+
+## Weather Api and key
+
+For this excercise, the VIsual Crossing API was used. In order to make valid API calls, the following API key is necessary: GDEZ82XJYC68QEVAZHGW6Q428
+
+## MonthPickerComponent
+
+A brand new component was created to handle switching months and years. Because it exists as a child component of CalendarComponent, an Output EventEmitter was used to update the selected Date. An argument could be made about using a Subject instead to allow subscription from any other component in the app. To do this, a new Subject would be created in the calendar service, and the MonthPickerComponent would emit a new value each time the Date changed. CalendarComponent would be listening to the Subject, re-rendering the calendar accordingly. But, for the purpose of this excercise, and being MonthPickerComponent a component only being used inside CalendarComponent, an Output EventEmitter was enough.

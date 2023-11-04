@@ -1,2 +1,2 @@
 export * from './calendar';
-export * from './mockup-data';
+export * from './api-data';

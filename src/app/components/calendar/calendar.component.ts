@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { Month, Reminder, Week } from 'src/app/interfaces';
+import { map, take, takeUntil } from 'rxjs/operators';
+import { IMonth, IReminder, IWeek } from 'src/app/interfaces';
 import { CalendarService, WeatherService } from 'src/app/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 import { Days } from 'src/app/constants';
-import { Day } from 'src/app/interfaces/day';
+import { IDay } from 'src/app/interfaces/day';
 
 @Component({
   selector: 'app-calendar',
@@ -16,8 +16,9 @@ import { Day } from 'src/app/interfaces/day';
 export class CalendarComponent implements OnInit, OnDestroy {
   public days = Days;
   public modalVisible = false;
-  public currentWeeks: Week[] = [];
-  public selectedMonth: Month | null = null;
+  public currentWeeks: IWeek[] = [];
+  public selectedMonth: IMonth | null = null;
+  public selectedMonthIndex: number;
 
   private _onDestroy$ = new Subject<boolean>();
 
@@ -27,28 +28,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private _matDialog: MatDialog
   ) {
     this._calendarService
-      .getCurrentMont('September')
-      .pipe(
-        takeUntil(this._onDestroy$),
-        map((response) => {
-          let weeks = response?.weeks;
-          const modifiedWeeks = weeks.map((week) => {
-            return {
-              ...week,
-              days: week.days.map((day) => {
-                return { ...day, date: day.date.substring(0, 2) };
-              }),
-            };
-          });
-          const modifiedResponse = {
-            ...response,
-            weeks: modifiedWeeks,
-          };
-          return modifiedResponse;
-        })
-      )
+      .getCurrentMont(new Date().getFullYear(), new Date().getMonth())
+      .pipe(take(1))
       .subscribe((response) => {
         this.selectedMonth = response;
+        this.selectedMonthIndex = new Date().getMonth();
         console.log('Current month:');
         console.log(response);
       });
@@ -58,8 +42,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this._calendarService
       .list(new Date())
       .pipe(takeUntil(this._onDestroy$))
-      .subscribe((reminders: Reminder[]) => {
-        reminders.map((reminder: Reminder) => {
+      .subscribe((reminders: IReminder[]) => {
+        reminders.map((reminder: IReminder) => {
           return {
             ...reminder,
             weather: this.getWeather(reminder.city),
@@ -80,7 +64,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     return x;
   }
 
-  public openReminderForm(reminder?: Reminder) {
+  public openReminderForm(reminder?: IReminder) {
     this._matDialog.open(ReminderFormComponent, {
       data: {
         reminder,
@@ -88,11 +72,24 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
-  public openModal(day: Day): void {
+  public openModal(date: Date): void {
+    if (date.getMonth() !== this.selectedMonthIndex) {
+      return;
+    }
     this.modalVisible = true;
   }
 
   public closeModal(): void {
     this.modalVisible = false;
+  }
+
+  public updateSelectedMonth(date: Date): void {
+    this._calendarService
+      .getCurrentMont(date.getFullYear(), date.getMonth())
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.selectedMonth = response;
+        this.selectedMonthIndex = date.getMonth();
+      });
   }
 }

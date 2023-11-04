@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Reminder } from 'src/app/interfaces/reminder';
+import { IReminder } from 'src/app/interfaces/reminder';
 
 @Component({
   selector: 'app-reminder-form',
@@ -8,7 +8,15 @@ import { Reminder } from 'src/app/interfaces/reminder';
   styleUrls: ['./reminder-form.component.scss'],
 })
 export class ReminderFormComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Reminder) {}
+  @Output() updateSelectedDate = new EventEmitter<Date>();
+
+  public selectedDate: Date | null;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: IReminder) {}
 
   ngOnInit(): void {}
+
+  public onDateChange(selectedDate: Date): void {
+    this.updateSelectedDate.emit(selectedDate);
+  }
 }

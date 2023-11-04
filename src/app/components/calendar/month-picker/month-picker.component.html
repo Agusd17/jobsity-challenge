@@ -1,0 +1,30 @@
+<div class="calendar-month-picker">
+  <div class="calendar-month">
+    <img
+      (click)="updateMonth(-1)"
+      class="month-picker-arrow"
+      src="assets/icons/left-arrow.png"
+      alt="decrease"
+    /><span class="text">{{ selectedDate | date : "MMMM" }}</span
+    ><img
+      (click)="updateMonth(1)"
+      class="month-picker-arrow"
+      src="assets/icons/right-arrow.png"
+      alt="decrease"
+    />
+  </div>
+  <div class="calendar-year">
+    <img
+      (click)="updateYear(-1)"
+      class="month-picker-arrow"
+      src="assets/icons/left-arrow.png"
+      alt="decrease"
+    /><span class="text">{{ selectedDate | date : "yyyy" }}</span
+    ><img
+      (click)="updateYear(1)"
+      class="month-picker-arrow"
+      src="assets/icons/right-arrow.png"
+      alt="decrease"
+    />
+  </div>
+</div>
