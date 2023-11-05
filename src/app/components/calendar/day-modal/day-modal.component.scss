@@ -1,0 +1,91 @@
+$modal-height: 400px;
+$modal-width: 350px;
+$modal-padding-y: 25px;
+$modal-padding-x: 10px;
+
+.back-cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-main {
+  background: white;
+  padding: $modal-padding-y $modal-padding-x;
+  border-radius: 5px;
+  box-shadow: 2px 2px 9px -5px rgb(0, 0, 0);
+  width: $modal-width;
+  height: $modal-height;
+}
+
+.day-title {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.reminder-icon {
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
+
+.day-reminders-cont {
+  height: calc(#{$modal-height} - #{$modal-padding-y} - 50px);
+  overflow: auto;
+}
+
+.day-reminder {
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px -4px black;
+  background: #f7f7f7;
+  margin-bottom: 5px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #e9e9e9;
+  }
+}
+
+.reminder-header {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.reminder-city {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.weather-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.reminder-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
+  .reminder-icon {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.reminder-time {
+  font-size: 12px;
+}

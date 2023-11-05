@@ -4,6 +4,31 @@
   gap: 10px;
 }
 
+.reminder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.reminder-time {
+  margin-bottom: 25px;
+}
+
+.reminder-date {
+}
+
+.close-icon {
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
+
+.reminder-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 p {
   margin-bottom: 0;
 }
@@ -17,4 +42,13 @@ p {
 
 .custom-calendar-card {
   width: 300px;
+}
+
+.update-button {
+  background: #2f74b5;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
 }

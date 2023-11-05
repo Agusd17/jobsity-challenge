@@ -1,1 +1,52 @@
-<p (click)="close()">day-modal works!</p>
+<div class="back-cont" *ngIf="day">
+  <div class="day-main">
+    <div class="day-title">
+      <h4>{{ day.date | date : "dd/MM/yyyy" }}</h4>
+      <div>
+        <img
+          class="reminder-icon"
+          src="assets/icons/close.png"
+          alt="close"
+          (click)="close()"
+        />
+      </div>
+    </div>
+    <div class="day-reminders-cont">
+      <div class="day-reminder" *ngFor="let reminder of day.reminders">
+        <div class="reminder-header">
+          <div class="reminder-time">
+            {{ reminder.dateTime | date : "shortTime" }}
+          </div>
+          <div class="reminder-city">
+            <div class="city-name">{{ reminder.city }}</div>
+            <div
+              class="city-weather"
+              *ngIf="reminder.weather && reminder.weather !== ''"
+            >
+              <img
+                class="weather-icon"
+                src="assets/weather-icons/{{ reminder.weather }}.svg"
+                alt="weather"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="reminder-text">{{ reminder.text }}</div>
+        <div class="reminder-footer">
+          <img
+            class="reminder-icon"
+            src="assets/icons/pencil.png"
+            alt="edit"
+            (click)="editReminder(reminder)"
+          />
+          <img
+            class="reminder-icon"
+            src="assets/icons/trash-can.png"
+            alt="delete"
+            (click)="deleteReminder(reminder)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

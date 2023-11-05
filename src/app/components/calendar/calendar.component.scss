@@ -18,6 +18,7 @@
 
 .calendar-header-row {
   background: #2f74b5;
+  border: 1px solid #2f74b5;
   color: white;
 }
 
@@ -43,4 +44,44 @@
     color: #a6a6a6;
     cursor: inherit;
   }
+}
+
+.reminder-cont {
+  height: 80px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+
+  &:hover {
+    overflow-y: auto;
+  }
+}
+
+.reminder-item {
+  max-width: 76px;
+  border-radius: 5px;
+  padding: 2px;
+  background: lightblue;
+  margin-bottom: 2px;
+}
+
+.reminder-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  line-height: normal;
+  margin-bottom: 0px;
+  color: rgb(39, 39, 39);
+}
+
+.reminder-city {
+  font-size: 9px;
+  margin-bottom: 0px;
+  color: rgb(39, 39, 39);
+}
+
+.weather-icon {
+  width: 20px;
+  height: 20px;
 }

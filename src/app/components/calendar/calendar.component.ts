@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { IMonth, IReminder, IWeek } from 'src/app/interfaces';
 import { CalendarService, WeatherService } from 'src/app/services';
@@ -13,13 +13,16 @@ import { IDay } from 'src/app/interfaces/day';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit, OnDestroy {
+export class CalendarComponent implements OnDestroy {
   public days = Days;
+  public selectedDay: IDay;
+  public currentSelectedDate: Date;
   public modalVisible = false;
   public currentWeeks: IWeek[] = [];
   public selectedMonth: IMonth | null = null;
   public selectedMonthIndex: number;
 
+  private _monthUpdateSubscription$: Subscription;
   private _onDestroy$ = new Subject<boolean>();
 
   constructor(
@@ -27,8 +30,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private _weatherService: WeatherService,
     private _matDialog: MatDialog
   ) {
+    this._monthUpdateSubscription$ = this._calendarService.monthUpdatedSubject$
+      .pipe(takeUntil(this._onDestroy$))
+      .subscribe(() => this.updateSelectedMonth(this.currentSelectedDate));
+
+    this.currentSelectedDate = new Date();
     this._calendarService
-      .getCurrentMont(new Date().getFullYear(), new Date().getMonth())
+      .listMonthReminders(
+        this.currentSelectedDate.getFullYear(),
+        this.currentSelectedDate.getMonth()
+      )
       .pipe(
         take(1),
         map((response) => {
@@ -38,6 +49,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
               return {
                 ...week,
                 days: week.days.map((day: IDay) => {
+                  let updatedReminders = day.reminders || [];
+
+                  if (day.reminders && Array.isArray(day.reminders)) {
+                    updatedReminders = day.reminders.sort(
+                      (a, b) =>
+                        new Date(a.dateTime).getTime() -
+                        new Date(b.dateTime).getTime()
+                    );
+                  }
                   return { ...day, date: new Date(day.date) };
                 }),
               };
@@ -52,28 +72,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
       });
   }
 
-  public ngOnInit(): void {
-    this._calendarService
-      .list(new Date())
-      .pipe(takeUntil(this._onDestroy$))
-      .subscribe((reminders: IReminder[]) => {
-        reminders.map((reminder: IReminder) => {
-          return {
-            ...reminder,
-            weather: this.getWeather(reminder.city),
-          };
-        });
-      });
-  }
-
   public ngOnDestroy() {
     this._onDestroy$.next(true);
     this._onDestroy$.complete();
-  }
-
-  public getWeather(city: string) {
-    const x = this._weatherService.getWeatherInformation(city, '2023-11-04');
-    return x;
   }
 
   public openReminderForm(reminder?: IReminder) {
@@ -84,10 +85,11 @@ export class CalendarComponent implements OnInit, OnDestroy {
     });
   }
 
-  public openModal(date: Date): void {
-    if (date.getMonth() !== this.selectedMonthIndex) {
+  public openModal(day: IDay): void {
+    if (day.date.getMonth() !== this.selectedMonthIndex) {
       return;
     }
+    this.selectedDay = day;
     this.modalVisible = true;
   }
 
@@ -96,8 +98,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   public updateSelectedMonth(date: Date): void {
+    this.currentSelectedDate = date;
     this._calendarService
-      .getCurrentMont(date.getFullYear(), date.getMonth())
+      .listMonthReminders(date.getFullYear(), date.getMonth())
       .pipe(
         take(1),
         map((response) => {
@@ -107,6 +110,15 @@ export class CalendarComponent implements OnInit, OnDestroy {
               return {
                 ...week,
                 days: week.days.map((day: IDay) => {
+                  let updatedReminders = day.reminders || [];
+
+                  if (day.reminders && Array.isArray(day.reminders)) {
+                    updatedReminders = day.reminders.sort(
+                      (a, b) =>
+                        new Date(a.dateTime).getTime() -
+                        new Date(b.dateTime).getTime()
+                    );
+                  }
                   return { ...day, date: new Date(day.date) };
                 }),
               };

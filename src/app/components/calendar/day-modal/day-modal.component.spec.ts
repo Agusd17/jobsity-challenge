@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DayModalComponent } from './day-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('DayModalComponent', () => {
   let component: DayModalComponent;
@@ -8,9 +10,9 @@ describe('DayModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DayModalComponent ]
-    })
-    .compileComponents();
+      declarations: [DayModalComponent],
+      imports: [HttpClientTestingModule, MatDialogModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

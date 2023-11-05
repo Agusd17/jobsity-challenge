@@ -1,4 +1,4 @@
-import { generateMonth } from './month-generator'; // Import your function
+import { generateMonth } from './helper-functions'; // Import your function
 import { IMonth, IWeek, IDay } from '../interfaces'; // Import required interfaces
 import { MonthsToNumber } from '../constants/enums';
 
@@ -26,10 +26,6 @@ describe('generateMonth', () => {
         const yearNumber = dateParts[0];
         const monthNumber = dateParts[1];
         const dayNumber = dateParts[2];
-
-        console.log('wallabies');
-
-        console.log(dateParts);
 
         expect(yearNumber).toBe(year);
         expect(monthNumber >= 1 && monthNumber <= 12).toBe(true);

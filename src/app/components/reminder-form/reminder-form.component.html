@@ -1,18 +1,45 @@
 <div class="reminder-container">
-  <div>
-    <h2>Add a new reminder</h2>
+  <div class="reminder-header">
+    <div>
+      <h2>Add a new reminder</h2>
+    </div>
+    <div>
+      <img
+        class="close-icon"
+        src="assets/icons/close.png"
+        alt="close"
+        (click)="closeModal()"
+      />
+    </div>
   </div>
   <div>
-    <p *ngIf="!selectedDate">Please, select a date:</p>
-    <p *ngIf="!!selectedDate">
-      Selected date: {{ selectedDate | date : "dd/MM/yyyy" }}
-    </p>
-    <mat-calendar
-      [(selected)]="selectedDate"
-      (selectedChange)="onDateChange($event)"
-      [minDate]="minSelectableDate"
-      [maxDate]="maxSelectableDate"
-    ></mat-calendar>
+    <div class="reminder-time">
+      <p *ngIf="!selectedDate">Please, select a time and a day:</p>
+      <p *ngIf="!!selectedDate">
+        Selected date: {{ selectedDate | date : "dd/MM/yyyy, HH:mm" }}
+      </p>
+    </div>
+    <div class="reminder-date">
+      <select
+        class="reminder-input"
+        [(ngModel)]="selectedHour"
+        (change)="onHourChange($event)"
+      >
+        <option
+          *ngFor="let timeOption of timeOptions"
+          [value]="timeOption"
+          [selected]="timeOption === selectedHour"
+        >
+          {{ timeOption }}
+        </option>
+      </select>
+      <mat-calendar
+        [(selected)]="selectedDate"
+        (selectedChange)="onDateChange($event)"
+        [minDate]="minSelectableDate"
+        [maxDate]="maxSelectableDate"
+      ></mat-calendar>
+    </div>
   </div>
   <div class="reminder-text">
     <p>Write your reminder (max {{ maxReminderLength }} characters):</p>
@@ -33,10 +60,15 @@
     <input
       class="reminder-input"
       type="text"
-      placeholder="Write something..."
+      placeholder="City name..."
       [(ngModel)]="reminderCity"
       name="reminderCity"
     />
   </div>
-  <button class="update-button" (click)="createReminder()">Apply</button>
+  <button class="update-button" *ngIf="!editMode" (click)="createReminder()">
+    Create reminder
+  </button>
+  <button class="update-button" *ngIf="editMode" (click)="updateReminder()">
+    Apply changes
+  </button>
 </div>

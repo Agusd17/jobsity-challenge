@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  width: 100%;
+  border: 1px solid #898989;
+  padding: 10px 0;
 
   .month-picker-arrow {
     width: 10px;
@@ -13,18 +14,19 @@
 
 .calendar-year,
 .calendar-month {
-  width: 120px;
+  width: 130px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .calendar-year {
-  width: 80px;
+  width: 60px;
 }
 
 .text {
-  margin: 0 10px;
-  color: #2f74b5;
+  margin: 0 5px;
+  color: #000;
+  font-size: 20px;
   font-weight: 700;
 }

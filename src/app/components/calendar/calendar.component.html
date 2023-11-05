@@ -23,7 +23,7 @@
       </tr>
       <tr class="calendar-week-row" *ngFor="let week of selectedMonth?.weeks">
         <td
-          (click)="openModal(day.date)"
+          (click)="openModal(day)"
           class="calendar-cell calendar-week-cell"
           *ngFor="let day of week.days; let i = index"
           [ngClass]="{
@@ -32,12 +32,25 @@
           }"
         >
           {{ day.date | date : "dd" }}
-          <div *ngFor="let reminder of day.reminders">
-            <p>
-              {{ reminder.dateTime | date : "shortTime" }}:
-              {{ reminder.text }}
-            </p>
-            <p>{{ reminder.city }} | {{ reminder.weather }}</p>
+          <div class="reminder-cont">
+            <div *ngFor="let reminder of day.reminders" class="reminder-item">
+              <!-- <p class="reminder-city">
+                {{ reminder.city }}
+                <img
+                  class="weather-icon"
+                  src="assets/weather-icons/{{ reminder.weather }}.svg"
+                  alt="weather"
+                />
+              </p> -->
+              <p
+                class="reminder-title"
+                title="{{ reminder.dateTime | date : 'shortTime' }}, {{
+                  reminder.text
+                }}"
+              >
+                {{ reminder.text }}
+              </p>
+            </div>
           </div>
         </td>
       </tr>
@@ -45,5 +58,9 @@
     <div class="week" *ngFor="let week of selectedMonth?.weeks"></div>
   </div>
 </div>
-<app-day-modal *ngIf="modalVisible" (closeModal)="closeModal()"></app-day-modal>
+<app-day-modal
+  *ngIf="modalVisible"
+  (closeModal)="closeModal()"
+  [day]="selectedDay"
+></app-day-modal>
 <!-- ======================== -->
