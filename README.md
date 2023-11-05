@@ -74,7 +74,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Both variable and method declarations are now ordered, having public declarations first and private ones after
 - Interface names include a capital 'I' as a prefix, to better identify them (also applied to existant interfaces)
 - Resources such as services, interfaces and constants now have an index.ts file grouping them to better organize them and improve the readabilty of the import paths
-- Existing unit tests were fixed to work again. No aditional testing was added to existing unit tests that aren't part of my code, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
+- Existing unit tests were fixed to work again. No aditional testing was added to pre-existing unit tests, only because I don't currently have enough time to dedicate to that task. In a real working environment, this is not an excuse, the entire app should have it's unit tests working as intended, and testing real functionality, not just if a component is truthy.
 - Some functionality has minor bugs, such as the date picker from Angular Material, not correctly implementing the minimumDate (you are allowed to pick December 31th, 1999, when the minimum year should be 2000). This might be related to timezone conflicts, with the Date javascript class. Maybe using Moment could fix it, but I decided to leave it as it is, otherwise I would have to dedicate some more time debugging and trying different solutions
 - As of last year, I've been starting using helper tools such as Codeium (VSCode extension that integrates ChatGPT-3 capabilites) and Google Bard, to improve my code and generate boilerplates. It's not perfect, but it can be quite useful when you're blocked.
 
@@ -93,6 +93,7 @@ Again, in reality, we would be uploading the data changes (creation, deletion, u
 ## Weather Api and key
 
 For this excercise, the Visual Crossing API was used. In order to make valid API calls, the following API key is necessary (already integrated): GDEZ82XJYC68QEVAZHGW6Q428
+The service request the correspondant weather to the provided city, date and time of the day.
 There is currently no City name validation in place, which means that entering invalid names when creating/editing a reminder, will result in an error when trying to retrieve the correspondant weather.
 To fix this, I've decided to not show any climate icons in the expanded card modal when that happens, just the city name.
 
@@ -104,6 +105,10 @@ A brand new component was created to handle switching months and years. Because 
 
 In order to deal with overflow, I've decided to hide any overflowing at all, until you hover over a day in the calendar. That allows to scroll in the Y axis. To see the full reminder, you need to click on a specific day, which opens a new modal, that contains the reminders that belong to that day, in full detail
 
+## CSS Styling
+
+Almost all components were created by me from scratch (with the exception of the material modal being used to render the ReminderFormComponent, but I did create the actual component). The idea was to apply a clean and modern design, with round edges and light shadows.
+
 ## Final notes
 
 Given my available time this week, I had to leave a lot of stuff aside to focus on the task at hand. Having said that, there is a lot of room for improvements, this are just some examples:
@@ -113,6 +118,7 @@ Given my available time this week, I had to leave a lot of stuff aside to focus 
 - adding NgRx to better handle the calendar data in a more reactive way
 - optimizing the design for mobile screens
 - creating an error handling strategy to give visual feedback to the user about what's going on behind the scenes with the reminders
+- replacing the ReminderFormComponent html structure with an actual Form (I personally like using reactive forms in general), and adding some validators to the text and city fields
 
 ...and many more things
 
